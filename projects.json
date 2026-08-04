@@ -1,0 +1,49 @@
+{
+  "_comment": "复制下面三个模板之一到 projects 数组中，取消注释并填写内容。statusType: done=已完成(绿), ongoing=进行中(黄), other=其他(蓝)",
+
+  "projects": [
+    {
+      "name": "E-Vote",
+      "status": "已完成",
+      "statusType": "done",
+      "description": "AI 智能生成 · WebSocket 实时推送 · 防刷票 · 全栈投票系统",
+      "stack": ["Node.js", "Express", "MySQL", "ECharts", "Socket.IO"],
+      "link": "https://github.com/ZhaoBuyan/E-Vote"
+    },
+    {
+      "name": "嵌入式方向",
+      "status": "进行中",
+      "statusType": "ongoing",
+      "description": "STM32 / ESP32 · FreeRTOS · 传感与控制 · 边缘 AI 探索",
+      "stack": ["C", "RTOS", "IoT", "边缘 AI"],
+      "link": null
+    }
+  ],
+
+  "_templates": {
+    "done": {
+      "name": "项目名称",
+      "status": "已完成",
+      "statusType": "done",
+      "description": "项目简短描述",
+      "stack": ["技术1", "技术2"],
+      "link": "https://github.com/用户名/仓库名"
+    },
+    "ongoing": {
+      "name": "项目名称",
+      "status": "进行中",
+      "statusType": "ongoing",
+      "description": "项目简短描述",
+      "stack": ["技术1", "技术2"],
+      "link": null
+    },
+    "other": {
+      "name": "项目名称",
+      "status": "其他",
+      "statusType": "other",
+      "description": "项目简短描述",
+      "stack": ["技术1", "技术2"],
+      "link": null
+    }
+  }
+}
