@@ -11,6 +11,22 @@
       "link": "https://github.com/ZhaoBuyan/E-Vote"
     },
     {
+      "name": "MuSync",
+      "status": "已完成",
+      "statusType": "done",
+      "description": "把音乐播放与程序状态同步到 Steam · 免安装单文件桌面应用",
+      "stack": ["C#", ".NET 9", "WinForms", "SteamKit2"],
+      "link": "https://github.com/ZhaoBuyan/MuSync"
+    },
+    {
+      "name": "辩论平台",
+      "status": "已完成",
+      "statusType": "done",
+      "description": "结构化实时辩论 · AI 论点提炼与辩论树 · 游客模式全栈应用",
+      "stack": ["TypeScript", "React", "Express", "Socket.IO", "SQLite"],
+      "link": "https://github.com/ZhaoBuyan/debate-app"
+    },
+    {
       "name": "嵌入式方向",
       "status": "进行中",
       "statusType": "ongoing",
