@@ -565,12 +565,8 @@
         const grid = document.getElementById("projectGrid");
         grid.innerHTML = "";
 
-        const order = { done: 0, ongoing: 1, other: 2 };
-        const sorted = [...projects].sort(
-          (a, b) => (order[a.statusType] ?? 2) - (order[b.statusType] ?? 2),
-        );
-
-        for (const p of sorted) {
+        // 顺序 = projects.json 中的书写顺序
+        for (const p of projects) {
           const card = document.createElement("div");
           card.className = "project-card";
 

@@ -3,12 +3,12 @@
 
   "projects": [
     {
-      "name": "E-Vote",
-      "status": "已完成",
-      "statusType": "done",
-      "description": "AI 智能生成 · WebSocket 实时推送 · 防刷票 · 全栈投票系统",
-      "stack": ["Node.js", "Express", "MySQL", "ECharts", "Socket.IO"],
-      "link": "https://github.com/ZhaoBuyan/E-Vote"
+      "name": "嵌入式方向",
+      "status": "进行中",
+      "statusType": "ongoing",
+      "description": "STM32 / ESP32 · FreeRTOS · 传感与控制 · 边缘 AI 探索",
+      "stack": ["C", "RTOS", "IoT", "边缘 AI"],
+      "link": null
     },
     {
       "name": "MuSync",
@@ -27,13 +27,14 @@
       "link": "https://github.com/ZhaoBuyan/debate-app"
     },
     {
-      "name": "嵌入式方向",
-      "status": "进行中",
-      "statusType": "ongoing",
-      "description": "STM32 / ESP32 · FreeRTOS · 传感与控制 · 边缘 AI 探索",
-      "stack": ["C", "RTOS", "IoT", "边缘 AI"],
-      "link": null
+      "name": "E-Vote",
+      "status": "已完成",
+      "statusType": "done",
+      "description": "AI 智能生成 · WebSocket 实时推送 · 防刷票 · 全栈投票系统",
+      "stack": ["Node.js", "Express", "MySQL", "ECharts", "Socket.IO"],
+      "link": "https://github.com/ZhaoBuyan/E-Vote"
     }
+
   ],
 
   "_templates": {
