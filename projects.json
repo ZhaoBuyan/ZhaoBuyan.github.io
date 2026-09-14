@@ -12,7 +12,7 @@
     },
     {
       "name": "MuSync",
-      "status": "正在优化",
+      "status": "正在更新",
       "statusType": "ongoing",
       "description": "把音乐播放与程序状态同步到 Steam · 免安装单文件桌面应用",
       "stack": ["C#", ".NET 9", "WinForms", "SteamKit2"],
