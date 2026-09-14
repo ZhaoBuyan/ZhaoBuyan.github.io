@@ -246,6 +246,44 @@
         transform: translateX(4px);
       }
 
+      .project-card .downloads {
+        margin-top: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .project-card .download-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 14px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none;
+        background: linear-gradient(135deg, #6c5ce7, #00b4d8);
+        color: #ffffff;
+        transition: 0.2s ease;
+      }
+
+      .project-card .download-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px -8px rgba(108, 92, 231, 0.85);
+      }
+
+      .project-card .download-btn.secondary {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: #b8cdff;
+        font-weight: 500;
+      }
+
+      .project-card .download-btn.secondary:hover {
+        border-color: #6c5ce7;
+        color: #ffffff;
+      }
+
       .project-card .status-badge {
         display: inline-block;
         border-radius: 20px;
@@ -587,6 +625,16 @@
               ? `<div class="stack">${p.stack.map((s) => `<span>${s}</span>`).join("")}</div>`
               : "";
 
+          const downloadsHtml =
+            p.downloads && p.downloads.length > 0
+              ? `<div class="downloads">${p.downloads
+                  .map(
+                    (d) =>
+                      `<a class="download-btn${d.primary ? "" : " secondary"}" href="${d.url}" target="_blank" rel="noopener">${d.label}</a>`,
+                  )
+                  .join("")}</div>`
+              : "";
+
           const linkHtml = isLink
             ? `<div class="link-hint">查看项目 →</div>`
             : `<div style="margin-top:10px; font-size:13px; color:#556688;">正在学习中 · 项目陆续上线</div>`;
@@ -598,6 +646,7 @@
                     </div>
                     <div class="desc">${p.description}</div>
                     ${stackHtml}
+                    ${downloadsHtml}
                     ${linkHtml}
                 `;
 
@@ -605,6 +654,10 @@
             card.style.cursor = "pointer";
             card.addEventListener("click", () => window.open(p.link, "_blank"));
           }
+
+          card.querySelectorAll(".download-btn").forEach((btn) => {
+            btn.addEventListener("click", (e) => e.stopPropagation());
+          });
 
           grid.appendChild(card);
         }
