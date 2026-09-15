@@ -14,14 +14,18 @@
       "name": "MuSync",
       "status": "正在更新",
       "statusType": "ongoing",
-      "description": "把音乐播放与程序状态同步到 Steam · 免安装单文件桌面应用",
+      "description": "把音乐播放与程序状态同步到 Steam · 安装版支持一键自动更新",
       "stack": ["C#", ".NET 9", "WinForms", "SteamKit2"],
       "link": "https://github.com/ZhaoBuyan/MuSync",
       "downloads": [
         {
-          "label": "下载 MuSync.exe",
-          "url": "https://github.com/ZhaoBuyan/MuSync/releases/latest/download/MuSync.exe",
+          "label": "下载安装版（推荐）",
+          "url": "https://github.com/ZhaoBuyan/MuSync/releases/latest/download/MuSync-Setup.exe",
           "primary": true
+        },
+        {
+          "label": "免安装版",
+          "url": "https://github.com/ZhaoBuyan/MuSync/releases/latest/download/MuSync.exe"
         },
         {
           "label": "轻量版 (.NET 9)",
