@@ -2,7 +2,7 @@
 
 # zhaobuyan.top
 
-> 个人主页 · 嵌入式全栈开发者
+> 个人主页 · 开发者
 
 这是我的个人网站源码，托管于 GitHub Pages，通过 `zhaobuyan.top` 域名访问。
 
