@@ -34,6 +34,25 @@
       ]
     },
     {
+      "name": "CodeAtlas",
+      "status": "正在更新",
+      "statusType": "ongoing",
+      "description": "把代码目录变成可视化地图 · 浏览器浏览 / MCP 供 AI 查询 · 单文件免安装",
+      "stack": ["Node.js", "WebView2", "MCP"],
+      "link": "https://github.com/ZhaoBuyan/CodeAtlas",
+      "downloads": [
+        {
+          "label": "下载 CodeAtlas.exe",
+          "url": "https://github.com/ZhaoBuyan/CodeAtlas/releases/latest/download/CodeAtlas.exe",
+          "primary": true
+        },
+        {
+          "label": "轻量版 (需 .NET 9 + Node)",
+          "url": "https://github.com/ZhaoBuyan/CodeAtlas/releases/latest/download/CodeAtlas-lite.exe"
+        }
+      ]
+    },
+    {
       "name": "辩论平台",
       "status": "已完成",
       "statusType": "done",
