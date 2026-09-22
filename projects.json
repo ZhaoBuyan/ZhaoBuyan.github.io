@@ -3,18 +3,18 @@
 
   "projects": [
     {
-      "name": "嵌入式方向",
+      "name": "stm32-to-linux",
       "status": "进行中",
       "statusType": "ongoing",
-      "description": "STM32 / ESP32 · FreeRTOS · 传感与控制 · 边缘 AI 探索",
-      "stack": ["C", "RTOS", "IoT", "边缘 AI"],
-      "link": null
+      "description": "STM32F429 裸机 → FreeRTOS → 嵌入式 Linux · 学习记录",
+      "stack": ["C", "STM32", "FreeRTOS", "Linux"],
+      "link": "https://github.com/ZhaoBuyan/stm32-to-linux"
     },
     {
       "name": "MuSync",
       "status": "正在更新",
       "statusType": "ongoing",
-      "description": "把音乐播放与程序状态同步到 Steam · 四个播放器 · 中英双语界面",
+      "description": "把音乐播放与程序状态同步到 Steam · 四个播放器 · 支持自定义常驻状态",
       "stack": ["C#", ".NET 9", "WinForms", "SteamKit2"],
       "link": "https://github.com/ZhaoBuyan/MuSync",
       "downloads": [
