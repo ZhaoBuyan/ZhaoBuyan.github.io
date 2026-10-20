@@ -14,7 +14,7 @@
       "name": "MuSync",
       "status": "正在更新",
       "statusType": "ongoing",
-      "description": "把音乐播放与程序状态同步到 Steam · 四个播放器 · 支持自定义常驻状态",
+      "description": "把音乐、浏览器视频与任意程序同步到 Steam · 五个播放器 · 自定义状态与数据源",
       "stack": ["C#", ".NET 9", "WinForms", "SteamKit2"],
       "link": "https://github.com/ZhaoBuyan/MuSync",
       "downloads": [
