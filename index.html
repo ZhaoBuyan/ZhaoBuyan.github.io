@@ -857,21 +857,13 @@
           document.addEventListener("pointermove", (e) => {
             if (e.pointerType !== "mouse") return;
             cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+            const hot = e.target.closest && e.target.closest("a, button, .project-card");
+            cursor.classList.toggle("grow", !!hot);
           });
           document.addEventListener("pointerdown", () => cursor.classList.add("press"));
           document.addEventListener("pointerup", () => cursor.classList.remove("press"));
           document.addEventListener("pointercancel", () => cursor.classList.remove("press"));
           window.addEventListener("blur", () => cursor.classList.remove("press"));
-          document.addEventListener("mouseover", (e) => {
-            if (e.target.closest && e.target.closest("a, button, .project-card")) {
-              cursor.classList.add("grow");
-            }
-          });
-          document.addEventListener("mouseout", (e) => {
-            if (e.target.closest && e.target.closest("a, button, .project-card")) {
-              cursor.classList.remove("grow");
-            }
-          });
           return;
         }
 
