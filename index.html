@@ -293,6 +293,68 @@
         vertical-align: middle;
       }
 
+      .reward-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: rgba(5, 7, 12, 0.78);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+
+      .reward-modal.open {
+        display: flex;
+      }
+
+      .reward-box {
+        position: relative;
+        width: 100%;
+        max-width: 340px;
+        padding: 14px;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8);
+        text-align: center;
+      }
+
+      .reward-box img {
+        display: block;
+        width: 100%;
+        border-radius: 16px;
+      }
+
+      .reward-box p {
+        margin-top: 12px;
+        font-size: 13px;
+        color: #b8cdff;
+      }
+
+      .reward-close {
+        position: absolute;
+        top: -12px;
+        right: -12px;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: #1a1f2e;
+        color: #cfd8ea;
+        font-size: 20px;
+        line-height: 1;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      .reward-close:hover {
+        background: #6c5ce7;
+        color: #fff;
+      }
+
       .socials {
         display: flex;
         flex-wrap: wrap;
@@ -442,6 +504,18 @@
         <a href="https://zhaobuyan.top" target="_blank">
           <span class="icon">🌐</span> zhaobuyan.top
         </a>
+        <a href="#reward" id="rewardBtn">
+          <span class="icon">💛</span> 赞赏
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== 赞赏弹窗 ===== -->
+    <div class="reward-modal" id="rewardModal" aria-hidden="true">
+      <div class="reward-box" role="dialog" aria-label="赞赏码">
+        <button class="reward-close" id="rewardClose" aria-label="关闭">×</button>
+        <img src="reward.jpg" alt="赵不言的赞赏码" />
+        <p>扫码请我喝杯奶茶 ☕</p>
       </div>
     </div>
 
@@ -664,6 +738,33 @@
       }
 
       loadProjects();
+
+      // ===== 赞赏弹窗 =====
+      (function () {
+        const modal = document.getElementById("rewardModal");
+        const btn = document.getElementById("rewardBtn");
+        const close = document.getElementById("rewardClose");
+        if (!modal || !btn || !close) return;
+        const open = () => {
+          modal.classList.add("open");
+          modal.setAttribute("aria-hidden", "false");
+        };
+        const shut = () => {
+          modal.classList.remove("open");
+          modal.setAttribute("aria-hidden", "true");
+        };
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          open();
+        });
+        close.addEventListener("click", shut);
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) shut();
+        });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") shut();
+        });
+      })();
     </script>
   </body>
 </html>
