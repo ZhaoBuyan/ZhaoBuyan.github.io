@@ -362,6 +362,18 @@
         margin: -27px 0 0 -27px;
       }
 
+      .glass-cursor.press {
+        width: 48px;
+        height: 48px;
+        margin: -24px 0 0 -24px;
+      }
+
+      .glass-cursor.grow.press {
+        width: 66px;
+        height: 66px;
+        margin: -33px 0 0 -33px;
+      }
+
       @media (hover: none) {
         .glass-cursor {
           width: 52px;
@@ -372,6 +384,16 @@
           width: 64px;
           height: 64px;
           margin: -32px 0 0 -32px;
+        }
+        .glass-cursor.press {
+          width: 64px;
+          height: 64px;
+          margin: -32px 0 0 -32px;
+        }
+        .glass-cursor.grow.press {
+          width: 76px;
+          height: 76px;
+          margin: -38px 0 0 -38px;
         }
       }
 
@@ -836,6 +858,10 @@
             if (e.pointerType !== "mouse") return;
             cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
           });
+          document.addEventListener("pointerdown", () => cursor.classList.add("press"));
+          document.addEventListener("pointerup", () => cursor.classList.remove("press"));
+          document.addEventListener("pointercancel", () => cursor.classList.remove("press"));
+          window.addEventListener("blur", () => cursor.classList.remove("press"));
           document.addEventListener("mouseover", (e) => {
             if (e.target.closest && e.target.closest("a, button, .project-card")) {
               cursor.classList.add("grow");
@@ -883,6 +909,7 @@
           y = ty = e.clientY;
           vx = vy = 0;
           cursor.classList.add("visible");
+          cursor.classList.add("press");
           if (raf === null) raf = requestAnimationFrame(tick);
         });
 
@@ -896,6 +923,7 @@
         document.addEventListener("pointerup", (e) => {
           if (e.pointerType !== "touch") return;
           active = false;
+          cursor.classList.remove("press");
         });
 
         document.addEventListener("pointercancel", () => {
