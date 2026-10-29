@@ -930,6 +930,33 @@
           active = false;
         });
       })();
+      // ===== 赞赏弹窗 =====
+      (function () {
+        const modal = document.getElementById("rewardModal");
+        const btn = document.getElementById("rewardBtn");
+        const close = document.getElementById("rewardClose");
+        if (!modal || !btn || !close) return;
+        const open = () => {
+          modal.classList.add("open");
+          modal.setAttribute("aria-hidden", "false");
+        };
+        const shut = () => {
+          modal.classList.remove("open");
+          modal.setAttribute("aria-hidden", "true");
+        };
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          open();
+        });
+        close.addEventListener("click", shut);
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) shut();
+        });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") shut();
+        });
+      })();
+
     </script>
   </body>
 </html>
