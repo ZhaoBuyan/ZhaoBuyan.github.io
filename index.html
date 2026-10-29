@@ -20,7 +20,10 @@
 
       body {
         font-family: "Inter", "Segoe UI", sans-serif;
-        background: #0b0d15;
+        background:
+          linear-gradient(rgba(8, 10, 16, 0.55), rgba(8, 10, 16, 0.82)),
+          url("star.jpg") center / cover no-repeat fixed,
+          #0b0d15;
         color: #e8edf5;
         min-height: 100vh;
         display: flex;
@@ -31,7 +34,12 @@
         overflow-x: hidden;
       }
 
+      @media (prefers-reduced-motion: reduce) {
+        #particles-canvas { display: none; }
+      }
+
       #particles-canvas {
+        display: none;
         position: fixed;
         top: 0;
         left: 0;
@@ -47,14 +55,25 @@
         max-width: 840px;
         width: 100%;
         background: rgba(255, 255, 255, 0.04);
-        backdrop-filter: blur(20px) saturate(1.4);
-        -webkit-backdrop-filter: blur(20px) saturate(1.4);
+        backdrop-filter: blur(10px) saturate(1.2);
+        -webkit-backdrop-filter: blur(10px) saturate(1.2);
         border: 1px solid rgba(255, 255, 255, 0.06);
         border-radius: 48px;
         padding: 52px 48px;
         box-shadow:
           0 40px 80px -20px rgba(0, 0, 0, 0.8),
           inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.10), transparent 28%, transparent 72%, rgba(255, 255, 255, 0.04)),
+          radial-gradient(120% 70% at 50% -10%, rgba(255, 255, 255, 0.09), transparent 55%);
       }
 
       .avatar-wrapper {
@@ -143,7 +162,6 @@
         font-size: 13px;
         font-weight: 500;
         color: #bccdf5;
-        backdrop-filter: blur(4px);
         transition: 0.2s;
       }
 
@@ -291,6 +309,70 @@
         font-size: 11px;
         margin-left: 8px;
         vertical-align: middle;
+      }
+
+      /* ===== 液态玻璃光标 ===== */
+      @media (hover: hover) and (pointer: fine) {
+        * { cursor: none !important; }
+      }
+
+      .glass-cursor {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 34px;
+        height: 34px;
+        margin: -17px 0 0 -17px;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        display: block;
+        opacity: 0;
+        background:
+          radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.12) 38%, rgba(255, 255, 255, 0.02) 62%),
+          radial-gradient(circle at 72% 80%, rgba(150, 190, 255, 0.35), rgba(255, 255, 255, 0) 55%);
+        border: 1px solid rgba(255, 255, 255, 0.45);
+        box-shadow:
+          0 4px 14px rgba(0, 0, 0, 0.35),
+          inset 0 0 12px rgba(255, 255, 255, 0.35),
+          inset -3px -3px 8px rgba(0, 0, 0, 0.2);
+        transition: width 0.18s ease, height 0.18s ease, margin 0.18s ease, opacity 0.3s ease;
+        will-change: transform;
+      }
+
+      .glass-cursor.visible {
+        opacity: 1;
+      }
+
+      .glass-cursor::after {
+        content: "";
+        position: absolute;
+        top: 18%;
+        left: 20%;
+        width: 30%;
+        height: 22%;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.9);
+        filter: blur(1px);
+      }
+
+      .glass-cursor.grow {
+        width: 54px;
+        height: 54px;
+        margin: -27px 0 0 -27px;
+      }
+
+      @media (hover: none) {
+        .glass-cursor {
+          width: 52px;
+          height: 52px;
+          margin: -26px 0 0 -26px;
+        }
+        .glass-cursor.grow {
+          width: 64px;
+          height: 64px;
+          margin: -32px 0 0 -32px;
+        }
       }
 
       .reward-modal {
@@ -442,6 +524,7 @@
     </style>
   </head>
   <body>
+    <div class="glass-cursor" id="glassCursor" aria-hidden="true"></div>
     <!-- ===== 粒子背景 ===== -->
     <canvas id="particles-canvas"></canvas>
 
@@ -529,8 +612,8 @@
         let width, height;
         let stars = [];
         let shootingStars = [];
-        const STAR_COUNT = 220;
-        const SHOOTING_STAR_COUNT = 60; // ← 流星数量 60 颗
+        const STAR_COUNT = 110;
+        const SHOOTING_STAR_COUNT = 10; // 流星 10 颗（原 60，性能优化）
 
         function resize() {
           width = window.innerWidth;
@@ -637,22 +720,21 @@
           }
         }
 
-        function draw() {
+        // 液态玻璃需要背景保持静止：动态背景会让每帧都重新折射，
+        // 实测帧率会从 58fps 掉到 2.6fps。所以星空改为一次性绘制的静态背景。
+        function drawStatic() {
           ctx.clearRect(0, 0, width, height);
           drawStars();
-          drawShootingStars();
-          requestAnimationFrame(draw);
         }
 
         resize();
         initStars();
-        initShootingStars();
-        draw();
+        drawStatic();
 
         window.addEventListener("resize", () => {
           resize();
           initStars();
-          initShootingStars();
+          drawStatic();
         });
       })();
 
@@ -739,30 +821,85 @@
 
       loadProjects();
 
-      // ===== 赞赏弹窗 =====
+
+      // ===== 液态玻璃光标 =====
       (function () {
-        const modal = document.getElementById("rewardModal");
-        const btn = document.getElementById("rewardBtn");
-        const close = document.getElementById("rewardClose");
-        if (!modal || !btn || !close) return;
-        const open = () => {
-          modal.classList.add("open");
-          modal.setAttribute("aria-hidden", "false");
+        const cursor = document.getElementById("glassCursor");
+        if (!cursor) return;
+
+        const isTouch = window.matchMedia("(hover: none)").matches;
+
+        // 桌面：直接跟随鼠标
+        if (!isTouch) {
+          cursor.classList.add("visible");
+          document.addEventListener("pointermove", (e) => {
+            if (e.pointerType !== "mouse") return;
+            cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+          });
+          document.addEventListener("mouseover", (e) => {
+            if (e.target.closest && e.target.closest("a, button, .project-card")) {
+              cursor.classList.add("grow");
+            }
+          });
+          document.addEventListener("mouseout", (e) => {
+            if (e.target.closest && e.target.closest("a, button, .project-card")) {
+              cursor.classList.remove("grow");
+            }
+          });
+          return;
+        }
+
+        // 触摸：弹簧 + 阻尼，松手后惯性滑行并淡出（水的惯性）
+        let x = 0, y = 0, tx = 0, ty = 0, vx = 0, vy = 0;
+        let active = false;
+        let raf = null;
+
+        const tick = () => {
+          raf = null;
+          const k = active ? 0.3 : 0.05;
+          const damp = active ? 0.72 : 0.93;
+
+          vx = (vx + (tx - x) * k) * damp;
+          vy = (vy + (ty - y) * k) * damp;
+          x += vx;
+          y += vy;
+
+          cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+
+          const moving =
+            Math.abs(vx) + Math.abs(vy) > 0.3 ||
+            Math.abs(tx - x) + Math.abs(ty - y) > 0.8;
+          if (active || moving) {
+            raf = requestAnimationFrame(tick);
+          } else {
+            cursor.classList.remove("visible");
+          }
         };
-        const shut = () => {
-          modal.classList.remove("open");
-          modal.setAttribute("aria-hidden", "true");
-        };
-        btn.addEventListener("click", (e) => {
-          e.preventDefault();
-          open();
+
+        document.addEventListener("pointerdown", (e) => {
+          if (e.pointerType !== "touch") return;
+          active = true;
+          x = tx = e.clientX;
+          y = ty = e.clientY;
+          vx = vy = 0;
+          cursor.classList.add("visible");
+          if (raf === null) raf = requestAnimationFrame(tick);
         });
-        close.addEventListener("click", shut);
-        modal.addEventListener("click", (e) => {
-          if (e.target === modal) shut();
+
+        document.addEventListener("pointermove", (e) => {
+          if (e.pointerType !== "touch" || !active) return;
+          tx = e.clientX;
+          ty = e.clientY;
+          if (raf === null) raf = requestAnimationFrame(tick);
         });
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape") shut();
+
+        document.addEventListener("pointerup", (e) => {
+          if (e.pointerType !== "touch") return;
+          active = false;
+        });
+
+        document.addEventListener("pointercancel", () => {
+          active = false;
         });
       })();
     </script>
