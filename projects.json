@@ -15,7 +15,7 @@
       "status": "正在更新",
       "statusType": "ongoing",
       "description": "把音乐、浏览器视频与任意程序同步到 Steam · 五个播放器 · 自定义状态与数据源",
-      "stack": ["C#", ".NET 9", "WinForms", "SteamKit2"],
+      "stack": ["C#", ".NET 10", "WinForms", "SteamKit2"],
       "link": "https://github.com/ZhaoBuyan/MuSync",
       "downloads": [
         {
@@ -37,7 +37,7 @@
       "name": "CodeAtlas",
       "status": "正在更新",
       "statusType": "ongoing",
-      "description": "把代码目录变成可视化地图 · 浏览器浏览 / MCP 供 AI 查询（9 工具）· 单文件免安装",
+      "description": "把代码目录变成可视化地图 · 浏览器浏览 / MCP 供 AI 查询（10 工具）· 单文件免安装",
       "stack": ["Node.js", "WebView2", "MCP"],
       "link": "https://github.com/ZhaoBuyan/CodeAtlas",
       "downloads": [
