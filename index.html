@@ -849,7 +849,7 @@
         const cursor = document.getElementById("glassCursor");
         if (!cursor) return;
 
-        const isTouch = window.matchMedia("(hover: none)").matches;
+        const isTouch = !window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
         // 桌面：直接跟随鼠标
         if (!isTouch) {
@@ -867,15 +867,16 @@
           return;
         }
 
-        // 触摸：弹簧 + 阻尼，松手后惯性滑行并淡出（水的惯性）
+        // 触摸：用 touch 事件（pointer 事件会在滚动时被 pointercancel 中断）
+        // 弹簧 + 阻尼：跟手有轻微滞后，松手后惯性滑行并淡出
         let x = 0, y = 0, tx = 0, ty = 0, vx = 0, vy = 0;
         let active = false;
         let raf = null;
 
         const tick = () => {
           raf = null;
-          const k = active ? 0.3 : 0.05;
-          const damp = active ? 0.72 : 0.93;
+          const k = active ? 0.35 : 0.06;
+          const damp = active ? 0.7 : 0.93;
 
           vx = (vx + (tx - x) * k) * damp;
           vy = (vy + (ty - y) * k) * damp;
@@ -894,33 +895,37 @@
           }
         };
 
-        document.addEventListener("pointerdown", (e) => {
-          if (e.pointerType !== "touch") return;
+        document.addEventListener("touchstart", (e) => {
+          const touch = e.touches[0];
+          if (!touch) return;
           active = true;
-          x = tx = e.clientX;
-          y = ty = e.clientY;
+          x = tx = touch.clientX;
+          y = ty = touch.clientY;
           vx = vy = 0;
           cursor.classList.add("visible");
           cursor.classList.add("press");
           if (raf === null) raf = requestAnimationFrame(tick);
-        });
+        }, { passive: true });
 
-        document.addEventListener("pointermove", (e) => {
-          if (e.pointerType !== "touch" || !active) return;
-          tx = e.clientX;
-          ty = e.clientY;
+        document.addEventListener("touchmove", (e) => {
+          if (!active) return;
+          const touch = e.touches[0];
+          if (!touch) return;
+          tx = touch.clientX;
+          ty = touch.clientY;
           if (raf === null) raf = requestAnimationFrame(tick);
-        });
+        }, { passive: true });
 
-        document.addEventListener("pointerup", (e) => {
-          if (e.pointerType !== "touch") return;
+        document.addEventListener("touchend", () => {
+          if (!active) return;
           active = false;
           cursor.classList.remove("press");
-        });
+        }, { passive: true });
 
-        document.addEventListener("pointercancel", () => {
+        document.addEventListener("touchcancel", () => {
           active = false;
-        });
+          cursor.classList.remove("press");
+        }, { passive: true });
       })();
       // ===== 赞赏弹窗 =====
       (function () {
