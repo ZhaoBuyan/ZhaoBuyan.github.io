@@ -867,31 +867,44 @@
           return;
         }
 
-        // 触摸：用 touch 事件（pointer 事件会在滚动时被 pointercancel 中断）
-        // 弹簧 + 阻尼：跟手有轻微滞后，松手后惯性滑行并淡出
+        // 触摸：跟手平滑（不振荡），松手后惯性滑行，滑出屏幕才关闭
         let x = 0, y = 0, tx = 0, ty = 0, vx = 0, vy = 0;
         let active = false;
         let raf = null;
 
         const tick = () => {
           raf = null;
-          const k = active ? 0.35 : 0.06;
-          const damp = active ? 0.7 : 0.93;
 
-          vx = (vx + (tx - x) * k) * damp;
-          vy = (vy + (ty - y) * k) * damp;
-          x += vx;
-          y += vy;
+          if (active) {
+            const px = x;
+            const py = y;
+            x += (tx - x) * 0.3;
+            y += (ty - y) * 0.3;
+            vx = (x - px) * 0.65 + vx * 0.35;
+            vy = (y - py) * 0.65 + vy * 0.35;
+          } else {
+            x += vx;
+            y += vy;
+            vx *= 0.985;
+            vy *= 0.985;
+          }
 
           cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
 
-          const moving =
-            Math.abs(vx) + Math.abs(vy) > 0.3 ||
-            Math.abs(tx - x) + Math.abs(ty - y) > 0.8;
-          if (active || moving) {
-            raf = requestAnimationFrame(tick);
-          } else {
+          const r = cursor.offsetWidth / 2 + 4;
+          const out =
+            x < -r ||
+            x > window.innerWidth + r ||
+            y < -r ||
+            y > window.innerHeight + r;
+
+          if (out) {
             cursor.classList.remove("visible");
+            return;
+          }
+
+          if (active || Math.abs(vx) + Math.abs(vy) > 0.08) {
+            raf = requestAnimationFrame(tick);
           }
         };
 
